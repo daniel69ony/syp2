@@ -1,0 +1,1045 @@
+@use './colors' as *;
+@use './components' as *;
+@use './mixins' as *;
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	font-size: 62.5%;
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: 'Poppins', sans-serif;
+	font-size: 1.6rem;
+}
+
+.white-section {
+	background-color: hsl(0, 0%, 95%);
+}
+
+// NAV
+
+.burger-btn {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	padding: 1em;
+	max-width: 1200px;
+	background: none;
+	border: 1px solid transparent;
+	border-radius: 16px;
+	cursor: pointer;
+	z-index: 100;
+
+	&:hover {
+		.burger-btn__bars::after,
+		.burger-btn__bars::before {
+			width: 100%;
+		}
+	}
+
+	&:focus {
+		outline: none;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		border-radius: 8px;
+	}
+
+	&__box {
+		position: relative;
+		width: 40px;
+		height: 30px;
+	}
+
+	&__bars,
+	&__bars::after,
+	&__bars::before {
+		@include burgerBtn;
+	}
+
+	&__bars {
+		width: 100%;
+
+		&::after {
+			top: 13px;
+			width: 60%;
+		}
+
+		&::before {
+			top: 27px;
+			width: 30%;
+			transition-delay: 0.1s;
+		}
+	}
+}
+
+.nav {
+	position: fixed;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100%;
+	transform: translateX(100%);
+	background-image: $brown-gradient-solid;
+	z-index: 99;
+	transition: transform 0.5s cubic-bezier(0.65, 0.05, 0.36, 1);
+
+	&--active {
+		transform: translateX(0);
+	}
+
+	&__item {
+		// text-align: center;
+		position: relative;
+		display: block;
+		margin: 0.5em 0;
+		padding: 0.5em 2em;
+		// width: 100%;
+		font-size: 4rem;
+		color: $pure-white;
+		text-decoration: none;
+
+		&::before {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 3px;
+			height: 100%;
+			transform: scaleY(0);
+			background-color: $pure-white;
+			content: '';
+			transition: transform 0.3s;
+		}
+
+		&:hover::before {
+			transform: scaleY(1);
+		}
+	}
+}
+
+@keyframes navItemsAnimation {
+	from {
+		transform: translateX(200%);
+	}
+
+	to {
+		transform: translateX(0);
+	}
+}
+
+.nav-items-animation {
+	animation: navItemsAnimation 1s both;
+}
+
+.black-bars-color,
+.black-bars-color::after,
+.black-bars-color::before {
+	background-color: $dark;
+}
+
+.grey-bars-color,
+.grey-bars-color::after,
+.grey-bars-color::before {
+	// background-color: $dark;
+	background-color: rgb(185, 185, 185);
+}
+
+// Header
+
+.header {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 2em;
+	height: 75vh;
+	text-align: center;
+	color: $pure-white;
+	@include heroImages('../img/coffee_machine.jpg');
+	background-attachment: scroll;
+
+	&__heading {
+		font-size: 4.8rem;
+		font-weight: bold;
+	}
+
+	&__text {
+		font-size: 1.4rem;
+	}
+
+	&__btn {
+		margin-top: 2em;
+		padding: 0.8em 1.6em;
+		font-size: 1.4rem;
+		font-weight: bold;
+		background: $pure-white;
+		border: none;
+		border-radius: 8px;
+		color: $dark;
+		text-decoration: none;
+		text-transform: uppercase;
+		cursor: pointer;
+
+		&::before {
+			background-color: rgb(224, 224, 224);
+		}
+	}
+}
+
+// MAIN
+//// ABOUTUS SECTION
+
+.aboutus {
+	&__box {
+		display: flex;
+		flex-direction: column;
+		margin: 2em 0;
+	}
+
+	&__img {
+		width: 100%;
+		height: 100%;
+		margin-bottom: 1em;
+		object-fit: cover;
+		border-radius: 26px;
+
+		&:last-of-type {
+			object-position: top;
+		}
+	}
+
+	&__title {
+		text-align: start;
+		margin-bottom: 0.5em;
+	}
+
+	&__text {
+		text-align: start;
+		font-size: 1.4rem;
+	}
+}
+
+//// hero-img
+
+.hero-img {
+	position: relative;
+	padding: 10em 2em;
+	@include heroImages('../img/coffee_spoon.jpg');
+	text-align: center;
+	color: $pure-white;
+	overflow: hidden;
+
+	&__title {
+		margin-bottom: 0.5em;
+		font-size: 4.8rem;
+		font-weight: bold;
+	}
+
+	&__text {
+		padding: 1em 0;
+	}
+}
+
+//// Reviews
+
+@media (max-width: 767px) {
+	.reviews.section-padding {
+		padding: 6em 0;
+	}
+}
+
+.reviews {
+	&__box {
+		position: relative;
+		margin: 2em;
+		padding: 2em;
+		height: 261px;
+		border-radius: 8px;
+		box-shadow: 3px 3px 10px #2e2e2e2e;
+		transition: transform 0.3s;
+
+		&-arrows {
+			position: absolute;
+			bottom: 5px;
+			right: 15px;
+			width: 50px;
+		}
+
+		&:hover {
+			transform: scale(0.95);
+		}
+	}
+
+	&__box-img {
+		position: absolute;
+		top: 8%;
+		left: 75%;
+		transform: translate(-50%, -50%);
+
+		img {
+			width: 90px;
+			height: 90px;
+			object-fit: cover;
+			border-radius: 50%;
+		}
+	}
+
+	&__box-quote {
+		align-self: start;
+		width: 25px;
+		height: 25px;
+		margin-bottom: 2em;
+		color: $main-color;
+	}
+
+	&__box-text {
+		margin-bottom: 2em;
+		font-size: 1.4rem;
+		color: $dark;
+	}
+
+	&__box-author {
+		align-self: end;
+		margin-bottom: 1em;
+		font-weight: bold;
+	}
+
+	&__box-info {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 495px) {
+	.reviews {
+		&__box {
+			height: auto;
+		}
+	}
+}
+
+//// Contact
+
+.contact {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	overflow: hidden;
+	color: white;
+
+	& .section-heading {
+		color: white;
+	}
+
+	.white-block-left {
+		background-color: $dark;
+	}
+
+	&__wrapper {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		z-index: 10;
+	}
+
+	&__form-label {
+		align-self: flex-start;
+		margin-bottom: 0.5em;
+		z-index: 10;
+	}
+
+	&__form-input {
+		@include contactForm;
+	}
+
+	&__form-textarea {
+		@include contactForm;
+		padding: 1em 0.5em;
+		width: 100%;
+		resize: vertical;
+		max-height: 500px;
+		min-height: 292px;
+		z-index: 10;
+	}
+
+	&__form-btn {
+		align-self: center;
+		padding: 0.8em;
+		width: 50%;
+		margin-top: 0.5em;
+		color: $pure-white;
+		border: 2px solid rgba(128, 128, 128, 0.3);
+		border-radius: 8px;
+		background-color: white;
+		color: black;
+		font-family: 'poppins';
+		font-size: 1.6rem;
+		cursor: pointer;
+		transition: border 0.3s, transform 0.3s, background-color 0.3s;
+
+		&::before {
+			background-color: rgb(224, 224, 224);
+		}
+
+		&:hover {
+			border: 2px solid rgb(61, 41, 28);
+		}
+	}
+
+	&__form {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		flex-direction: column;
+		width: 70%;
+		border-radius: 26px;
+		background-color: white;
+		color: black;
+
+		&-iconParent {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+		}
+
+		&-icon {
+			position: absolute;
+			top: 50%;
+			left: 12px;
+			transform: translateY(-50%);
+			width: 25px;
+		}
+
+		&-left {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			width: 45%;
+			margin: 2em 0 0 2em;
+		}
+
+		&-right {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+			width: 45%;
+			margin: 2em 2em 0 2em;
+		}
+
+		&-upperPart {
+			display: flex;
+			flex-direction: row;
+			width: 100%;
+		}
+
+		&-bottom {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			margin-bottom: 2em;
+		}
+
+		&-errorMsg {
+			position: absolute;
+			opacity: 0;
+			top: 75%;
+			left: 0;
+			color: red;
+			font-weight: bold;
+			font-size: 1.4rem;
+			transition: opacity 0.3s;
+
+			&--textArea {
+				top: 92%;
+				left: 0;
+			}
+
+			&--active {
+				opacity: 1;
+			}
+		}
+	}
+
+	&__details {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		margin-bottom: 4em;
+		width: 80%;
+
+		&-item {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			transition: transform 0.3s;
+			cursor: pointer;
+
+			&:hover {
+				transform: scale(1.2);
+			}
+		}
+
+		&-icon {
+			width: 43px;
+			height: 43px;
+			margin-bottom: 1em;
+		}
+
+		&-text {
+			font-size: 1.9rem;
+		}
+	}
+
+	&__map {
+		display: flex;
+		justify-content: center;
+		margin-top: 4em;
+		width: 100%;
+
+		&-map {
+			border-radius: 26px;
+			width: 100%;
+		}
+	}
+
+	&__bgcImg {
+		position: absolute;
+		width: 110%;
+		height: 110%;
+		filter: blur(20px) brightness(80%);
+	}
+
+	&__modal {
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		top: 30%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 50%;
+		height: 30%;
+		background-color: white;
+		color: rgb(34, 197, 94);
+		border-radius: 26px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+		z-index: 102;
+		transition: transform 0.5s, opacity 0.5s;
+		transform: scale(0);
+		opacity: 0;
+
+		&-icon {
+			width: 180px;
+			margin-bottom: 3em;
+		}
+
+		&-title {
+			margin: 0 0.5em 1em 0.5em;
+			font-size: 4rem;
+			font-weight: bold;
+		}
+
+		&-closeBtn {
+			padding: 1em 3em;
+			font-size: 2.5rem;
+			font-family: 'poppins';
+			font-weight: bold;
+			border-radius: 16px;
+			border: none;
+			transition: color 0.3s, transform 0.3s;
+			cursor: pointer;
+
+			&::before {
+				background-color: rgb(34, 197, 94);
+			}
+
+			&:hover {
+				color: white;
+			}
+		}
+
+		&-shadow {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 101;
+			transition: opacity 0.4s;
+			opacity: 0;
+			transform: scale(0);
+
+			&--active {
+				transform: scale(1);
+				opacity: 1;
+			}
+		}
+
+		&--active {
+			transform: scale(1) translate(-50%, -50%);
+			opacity: 1;
+		}
+	}
+}
+
+///// Footer
+
+.footer {
+	color: $pure-white;
+	background-color: $dark;
+
+	.wrapper {
+		padding: 6em 2em 2em;
+	}
+
+	&__box {
+		font-size: 1.4rem;
+
+		&-list {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			list-style: none;
+
+			&-item {
+				margin-bottom: 1em;
+				transition: color 0.3s;
+				&:hover {
+					color: rgb(234, 198, 150);
+				}
+			}
+		}
+	}
+
+	&__box-desktop {
+		display: none;
+	}
+
+	&__box-title {
+		text-align: center;
+		margin-bottom: 1em;
+		font-size: 3rem;
+		text-transform: uppercase;
+	}
+
+	&__box-link {
+		padding: 0 0.3em;
+		color: $pure-white;
+		font-size: 3.6rem;
+		text-decoration: none;
+		transition: color 0.3s;
+
+		&:first-child {
+			padding-left: 0;
+		}
+
+		&:hover {
+			color: $light-white;
+		}
+	}
+
+	&__bottom-text {
+		padding: 2em;
+		text-align: center;
+	}
+}
+
+///////////// MEDIA ////////////
+
+@media (min-width: 576px) {
+	.aboutus {
+		&__box {
+			flex-direction: row;
+			justify-content: space-between;
+			margin: 5em 0;
+
+			&-text {
+				display: flex;
+				justify-content: center;
+				flex-direction: column;
+				width: 55%;
+
+				&--right {
+					display: flex;
+					justify-content: center;
+					flex-direction: column;
+					text-align: right;
+				}
+			}
+
+			&-img {
+				width: 40%;
+
+				&--right {
+					order: 1;
+				}
+			}
+		}
+
+		&__img {
+			margin-bottom: 0;
+			max-height: 300px;
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	.white-block {
+		height: 50px;
+		width: 45%;
+	}
+
+	.header {
+		&__heading {
+			font-size: 6.6rem;
+		}
+
+		&__text {
+			font-size: 2.2rem;
+		}
+
+		&__btn {
+			font-size: 1.6rem;
+		}
+	}
+
+	.aboutus {
+		&__text {
+			font-size: 1.8rem;
+		}
+	}
+
+	.hero-img {
+		padding: 30rem 2em;
+
+		hr {
+			margin: 0 auto;
+			width: 70%;
+		}
+
+		&__text {
+			font-size: 2.2rem;
+		}
+	}
+
+	.footer {
+		&__boxes {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		&__box-desktop {
+			display: block;
+		}
+
+		&__box {
+			margin: 0 2em;
+			width: 25%;
+
+			&:first-child {
+				width: 50%;
+			}
+		}
+
+		&__box-title {
+			font-size: 2.4rem;
+		}
+
+		&__box-list {
+			list-style: none;
+		}
+
+		&__box-list-item {
+			margin-bottom: 1em;
+
+			a {
+				color: $light-white;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	.burger-btn {
+		top: 50px;
+		right: 50px;
+	}
+
+	.header {
+		background-image: $black-gradient, url('../img/coffee_machine.jpg');
+
+		&__heading {
+			font-size: 10rem;
+		}
+	}
+
+	.nav {
+		&__item {
+			font-size: 4rem;
+		}
+	}
+
+	.aboutus {
+		&__box {
+			margin: 5em 0;
+
+			&-text {
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				margin-bottom: 2.5em;
+			}
+		}
+
+		&__title {
+			font-size: 3rem;
+		}
+
+		&__text {
+			font-size: 2.2rem;
+		}
+	}
+
+	.hero-img {
+		padding: 33rem 2em;
+		background-image: $black-gradient, url('../img/coffee_spoon.jpg');
+
+		&__title {
+			font-size: 7.2rem;
+		}
+
+		hr {
+			width: 60%;
+			max-width: 900px;
+		}
+	}
+}
+
+@media (max-width: 1271px) {
+	.contact {
+		&__modal {
+			width: 60%;
+
+			&-icon {
+				width: 150px;
+			}
+
+			&-title {
+				font-size: 3.8rem;
+			}
+
+			&-closeBtn {
+				font-size: 2.3rem;
+			}
+		}
+	}
+}
+
+@media (max-width: 1100px) {
+	.contact {
+		&__form {
+			&-iconParent {
+				width: 80%;
+			}
+
+			&-upperPart {
+				flex-direction: column;
+			}
+
+			&-left {
+				align-items: center;
+				width: 100%;
+				margin: 2em 0 0 0;
+			}
+
+			&-right {
+				align-items: center;
+				justify-content: center;
+				width: 100%;
+				margin: 2em 0 0 0;
+			}
+
+			&-textarea {
+				width: 80%;
+			}
+
+			&-label {
+				align-self: center;
+			}
+
+			&-errorMsg {
+				&--textArea {
+					top: 92%;
+					left: 10%;
+				}
+			}
+		}
+
+		&__details {
+			justify-content: space-between;
+		}
+	}
+
+	.contact {
+		&__modal {
+			width: 70%;
+			height: auto;
+
+			&-icon {
+				width: 140px;
+				margin-top: 2em;
+			}
+
+			&-closeBtn {
+				margin-bottom: 2em;
+				font-size: 2.2rem;
+			}
+
+			&-title {
+				font-size: 3.5rem;
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.contact {
+		&__form {
+			width: 85%;
+			margin-bottom: 2em;
+		}
+
+		&__details {
+			flex-direction: column;
+			width: 90%;
+
+			&-item:first-child {
+				margin-bottom: 4em;
+			}
+		}
+	}
+
+	.footer {
+		&__box-list-item {
+			font-size: 1.6rem;
+		}
+	}
+
+	.contact {
+		&__modal {
+			width: 85%;
+
+			&-icon {
+				width: 125px;
+				margin-bottom: 2em;
+			}
+
+			&-closeBtn {
+				font-size: 2rem;
+			}
+
+			&-title {
+				font-size: 3rem;
+			}
+		}
+	}
+}
+
+@media (max-width: 576px) {
+
+	.aboutus {
+
+		&__img--first {
+			content: url('../img/service-small.jpg');
+		}
+
+		&__img--second {
+			content: url('../img/companies-small.jpg');
+		}
+
+	}
+
+	.header {
+		background-image: $black-gradient, url('../img/coffee_machine-small.jpg');
+	}
+
+	.hero-img {
+		background-image: $black-gradient, url('../img/coffee_spoon-small.jpg');
+	}
+
+	.contact {
+		&__form {
+			width: 100%;
+
+			&-btn {
+				width: 60%;
+			}
+
+			&-input {
+				margin-bottom: 3em;
+			}
+
+			&-icon {
+				top: 45%;
+			}
+
+			&-errorMsg {
+				top: 67%;
+				text-align: center;
+
+				&--textArea {
+					top: 92%;
+					left: 10%;
+				}
+			}
+		}
+
+		&__modal {
+			top: 10%;
+			width: 90%;
+
+			&-icon {
+				width: 100px;
+				margin-bottom: 2em;
+			}
+
+			&-closeBtn {
+				font-size: 1.7rem;
+			}
+
+			&-title {
+				font-size: 2.5rem;
+			}
+		}
+	}
+}
+
+@media (max-width: 441px) {
+	.contact {
+		&__modal {
+			&-title {
+				text-align: center;
+			}
+		}
+	}
+}
